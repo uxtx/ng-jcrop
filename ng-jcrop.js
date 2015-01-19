@@ -202,7 +202,7 @@
             var config = angular.extend({
                 onChange: $scope.showPreview,
                 onSelect: $scope.showPreview,
-                aspectRatio: 1
+                // aspectRatio: 1
             }, ngJcropConfig.jcrop);
 
             if( $scope.selection && $scope.selection.length === 6 ){
@@ -228,16 +228,18 @@
          */
         $scope.init = function(src){
             $scope.destroy();
+            // Wrap $element with jquery; as this doens't always return expected results.
+            var $$element = $($element)
 
             $scope.mainImg = $('<img>').addClass('ng-jcrop-image');
             $scope.mainImg.on('load', $scope.onMainImageLoad);
             $scope.mainImg.css({ maxWidth: ngJcropConfig.jcrop.maxWidth, maxHeight: ngJcropConfig.jcrop.maxHeight });
             $scope.mainImg.attr('src', src);
 
-            $element.find('.ng-jcrop-image-wrapper').empty().append($scope.mainImg);
+            $$element.find('.ng-jcrop-image-wrapper').empty().append($scope.mainImg);
 
-            var thumbnailWrapper = $element.find('.ng-jcrop-thumbnail-wrapper');
-            $scope.previewImg = $element.find('.ng-jcrop-thumbnail');
+            var thumbnailWrapper = $$element.find('.ng-jcrop-thumbnail-wrapper');
+            $scope.previewImg = $$element.find('.ng-jcrop-thumbnail');
 
             if( $scope.thumbnail ){
                 thumbnailWrapper.show();
